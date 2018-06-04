@@ -6,6 +6,7 @@ Usage:
 
 Options:
     -h --help            Show this screen
+    --embeddings E       Path to embeddings [default: ~/data/glove/glove.embeddings.6B.100d.npy]
     --update-embeddings  Update input embeddings
     --max-length M       Skip sentences longer than M words during
                          training [default: 999]
@@ -20,6 +21,7 @@ import dynet as dy
 import numpy as np
 import pickle
 from docopt import docopt
+import os
 from time import time
 import networks
 
@@ -185,7 +187,7 @@ if __name__ == "__main__":
     model = dy.Model()
 
     update_embeddings = bool(args["--update-embeddings"])
-    input_embeddings = np.load("data/snli2/input_embeddings.npy")
+    input_embeddings = np.load(os.path.expanduser(args["--embeddings"]))
 
     parsed = False
     if args["cyk"]:
